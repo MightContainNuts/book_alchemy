@@ -4,13 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>Add Book</title>
   </head>
   <body>
+    <h1>Add Book</h1>
+  <form action="{{ url_for('main.add_book') }}" method="POST">
+  {{ form.hidden_tag() }}
+      <p>
+        {{ form.author.label }}<br>
+        {{ form.author() }}
+        {% for error in form.author.errors %}
+            <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+      </p>
+      <p>
+        {{ form.title.label }}<br>
+        {{ form.title(size=30) }}
+        {% for error in form.title.errors %}
+          <span class="error">{{ error }}</span>
+        {% endfor %}
+      </p>
 
-  <form action="/add_author" method="POST">
-  <!-- Add the form here -->
+      <p>
+        {{ form.isbn.label }}<br>
+        {{ form.isbn() }}
+        {% for error in form.isbn.errors %}
+          <span class="error">{{ error }}</span>
+        {% endfor %}
+      </p>
+
+      <p>
+        {{ form.publication_year.label }}<br>
+        {{ form.publication_year() }}
+        {% for error in form.publication_year.errors %}
+          <span class="error">{{ error }}</span>
+        {% endfor %}
+      </p>
+
+      <p>
+        {{ form.submit() }}
+      </p>
   </form>
 
   </body>
 </html>
-

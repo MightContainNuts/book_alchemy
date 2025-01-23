@@ -1,11 +1,7 @@
-from app import create_app,db
-from flask_migrate import Migrate
+from app.__init__ import create_app
 
-app = create_app('development')
-migrate = Migrate(app, db)
+app = create_app("development")
 
 
-
-
-if __name__ == '__main__':
-    app.run(debug=True, port = 5000, host = '0.0.0.0')
+if __name__ == "__main__":
+    app.run(debug=True, port=5000, host="0.0.0.0")

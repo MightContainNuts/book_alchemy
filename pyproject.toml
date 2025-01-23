@@ -11,8 +11,17 @@ flask = "^3.1.0"
 flask-sqlalchemy = "^3.1.1"
 python-dotenv = "^1.0.1"
 flask-migrate = "^4.1.0"
+pre-commit = "^4.1.0"
+pytest = "^8.3.4"
+pytest-cov = "^6.0.0"
+pytest-sugar = "^1.0.0"
+flask-wtf = "^1.2.2"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]  # or wherever your tests are located
+python_files = "test_*.py"
