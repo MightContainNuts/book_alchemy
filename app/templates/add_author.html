@@ -4,19 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Add Author</title>
+    <style>
+      .error {
+        color: red;
+      }
+    </style>
   </head>
   <body>
+    <h1>Add Author</h1>
+    <form method="POST" action="{{ url_for('main.add_author') }}">
+      {{ form.hidden_tag() }}
 
-  <form action="/add_author" method="POST">
-  <label for="name">Author Name:</label>
-  <input type="text" id="name" name="name" required><br><br>
+      <p>
+        {{ form.name.label }}<br>
+        {{ form.name(size=30) }}
+        {% for error in form.name.errors %}
+          <span class="error">{{ error }}</span>
+        {% endfor %}
+      </p>
 
-  <label for="birthdate">Birthdate:</label>
-  <input type="date" id="birthdate" name="birthdate" required><br><br>
-  <label for="date_of_death">Date of Death:</label>
-  <input type="date" id="date_of_death" name="date_of_death"><br><br>
-  <input type="submit" value="Add Author">
-  </form>
+      <p>
+        {{ form.birth_date.label }}<br>
+        {{ form.birth_date() }}
+        {% for error in form.birth_date.errors %}
+          <span class="error">{{ error }}</span>
+        {% endfor %}
+      </p>
 
+      <p>
+        {{ form.date_of_death.label }}<br>
+        {{ form.date_of_death() }}
+        {% for error in form.date_of_death.errors %}
+          <span class="error">{{ error }}</span>
+        {% endfor %}
+      </p>
+
+      <p>
+        {{ form.submit() }}
+      </p>
+    </form>
   </body>
 </html>

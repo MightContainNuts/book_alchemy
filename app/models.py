@@ -1,5 +1,5 @@
-from app import db
-from book_alchemy import app
+from app.db import db
+from datetime import date
 
 
 class Author(db.Model):
@@ -35,10 +35,14 @@ class Book(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey("authors.id"))
 
 
-with app.app_context():
-    db.create_all()
+# with app.app_context():
+#     db.create_all()
 
 
 # create ORM classes here
 # with app.app_context():
 #     db.create_all()
+
+new_author = Author(
+    name="J.K. Rowling", birth_date=date(1965, 7, 31), date_of_death=None
+)
