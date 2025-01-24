@@ -1,0 +1,20 @@
+<table border="1">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Publication Year</th>
+                    <th>ISBN</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book, author in results %}
+                <tr>
+                    <td>{{ book.title }}</td>
+                    <td>{{ author.name }}</td>
+                    <td>{{ book.publication_year }}</td>
+                    <td>{{ book.isbn }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>

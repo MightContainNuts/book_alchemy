@@ -7,32 +7,37 @@
       <title>Home</title>
   </head>
   <body>
+  {% include 'navbar.html' %}
+
   <h1>Books List</h1>
 
-    {% if books %}
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Publication Year</th>
-                    <th>ISBN</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for book, author in books %}
-                <tr>
-                    <td>{{ book.title }}</td>
-                    <td>{{ author.name }}</td>
-                    <td>{{ book.publication_year }}</td>
-                    <td>{{ book.isbn }}</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    {% if results %}
+        {% include 'book_table.html' %}
     {% else %}
         <p>No books available.</p>
     {% endif %}
+  <h2>Sort Inventory by books or by Authors</h2>
+  <form action="{{ url_for('main.index') }}" method="POST">
+  {{ form.hidden_tag() }}
+      <p>
+        {{ form.sorting_criteria.label }}<br>
+        {{ form.sorting_criteria() }}
+        {% for error in form.sorting_criteria.errors %}
+            <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+      </p>
+  <p>
+        {{ form.sorting_direction.label }}<br>
+        {{ form.sorting_direction() }}
+        {% for error in form.sorting_direction.errors %}
+            <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+      </p>
+
+  <p>
+        {{ form.submit() }}
+      </p>
+  </form>
 
   </body>
 </html>
