@@ -63,3 +63,13 @@ class SearchForm(FlaskForm):
     )  # noqa E501
     search = StringField("Search", validators=[DataRequired()])
     submit = SubmitField("Search")
+
+
+class DeleteBookForm(FlaskForm):
+    search = StringField("Search", validators=[DataRequired()])
+    submit = SubmitField("Search")
+
+
+class DeleteAuthorForm(FlaskForm):
+    search = StringField("Search", validators=[DataRequired()])
+    submit = SubmitField("Search")
