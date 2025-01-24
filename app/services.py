@@ -95,3 +95,14 @@ class DBLogic:
         for row in search_result:
             logger.info(row)
         return search_result
+
+    @staticmethod
+    def delete_book(title_to_delete):
+        logger.info(f"Deleting book with {title_to_delete}")
+        delete_result = (
+            db.session.query(Book)
+            .where(Book.title == title_to_delete)
+            .delete()  # noqa E501
+        )
+        db.session.commit()
+        return delete_result

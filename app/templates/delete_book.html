@@ -1,0 +1,32 @@
+ <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>Home</title>
+  </head>
+  <body>
+  {% include 'navbar.html' %}
+
+  <h1>Delete Book</h1>
+
+
+  <form action="{{ url_for('main.delete_book') }}" method="POST">
+  {{ form.hidden_tag() }}
+      <p>
+        {{ form.search.label }}<br>
+        {{ form.search() }}
+        {% for error in form.search.errors %}
+            <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+      </p>
+
+  <p>
+      <p>Are you sure you want to delete the book with the following details?</p>
+        {{ form.submit() }}
+      </p>
+  </form>
+
+  </body>
+</html>
