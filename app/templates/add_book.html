@@ -7,6 +7,7 @@
       <title>Add Book</title>
   </head>
   <body>
+  {% include 'navbar.html' %}
     <h1>Add Book</h1>
   <form action="{{ url_for('main.add_book') }}" method="POST">
   {{ form.hidden_tag() }}

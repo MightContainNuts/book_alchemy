@@ -1,6 +1,7 @@
 from app.db import db
 from app.models import Author, Book
 from app.logger import setup_logger
+from sqlalchemy import func
 
 logger = setup_logger(__name__)
 
@@ -52,3 +53,45 @@ class DBLogic:
             .all()
         )
         return books
+
+    @staticmethod
+    def sort_inventory(sorting_criteria, sorting_direction):
+        logger.info(
+            f"Sorting books by {sorting_criteria} in {sorting_direction} order"
+        )  # noqa E501
+
+        criteria_mapping = {"book": Book.title, "author": Author.name}
+
+        direction_mapping = {
+            "asc": lambda field: field.asc(),
+            "desc": lambda field: field.desc(),
+        }
+
+        criteria_column = criteria_mapping.get(sorting_criteria)
+        direction_function = direction_mapping.get(sorting_direction)
+
+        criteria_result = (
+            db.session.query(Book, Author)
+            .join(Author, Book.author_id == Author.id)
+            .order_by(direction_function(criteria_column))
+            .all()
+        )
+        for row in criteria_result:
+            logger.info(row)
+        return criteria_result
+
+    @staticmethod
+    def search_inventory(item, search):
+        logger.info(f"Searching for {item} with {search}")
+        search = search.strip().lower()
+        search_mapping = {"author": Author.name, "book": Book.title}
+        search_column = search_mapping.get(item)
+        search_result = (
+            db.session.query(Book, Author)
+            .join(Author, Book.author_id == Author.id)
+            .filter(func.lower(search_column).like(f"%{search}%"))
+            .all()
+        )
+        for row in search_result:
+            logger.info(row)
+        return search_result

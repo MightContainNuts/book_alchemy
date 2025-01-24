@@ -12,6 +12,7 @@
     </style>
   </head>
   <body>
+  {% include 'navbar.html' %}
     <h1>Add Author</h1>
     <form method="POST" action="{{ url_for('main.add_author') }}">
       {{ form.hidden_tag() }}

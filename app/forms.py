@@ -41,3 +41,25 @@ class BookForm(FlaskForm):
         ],
     )
     submit = SubmitField("Add Book")
+
+
+class SortForm(FlaskForm):
+    sorting_criteria = SelectField(
+        "Sort by",
+        choices=[("book", "Book Title"), ("author", "Author Name")],
+        validators=[DataRequired()],
+    )
+    sorting_direction = SelectField(
+        "Sort Direction",
+        choices=[("asc", "Ascending"), ("desc", "Descending")],
+        validators=[DataRequired()],
+    )
+    submit = SubmitField("Sort Inventory")
+
+
+class SearchForm(FlaskForm):
+    item = SelectField(
+        "Search by", choices=[("author", "Author"), ("book", "Book")]
+    )  # noqa E501
+    search = StringField("Search", validators=[DataRequired()])
+    submit = SubmitField("Search")

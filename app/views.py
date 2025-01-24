@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, url_for, render_template, flash, request
 
-from app.forms import AuthorForm, BookForm
+from app.forms import AuthorForm, BookForm, SortForm, SearchForm
 from app.models import Author
 from app.services import DBLogic as dbl
 from app.logger import setup_logger
@@ -17,10 +17,17 @@ def before_request():
     logger.info(f"Incoming request from {ip_address}")
 
 
-@main.route("/")
+@main.route("/", methods=["POST", "GET"])
 def index():
-    books = dbl.get_books()
-    return render_template("home.html", books=books)
+    form = SortForm()
+    if form.validate_on_submit():
+        sorting_criteria = form.sorting_criteria.data
+        sorting_direction = form.sorting_direction.data
+        results = dbl.sort_inventory(sorting_criteria, sorting_direction)
+        return render_template("home.html", results=results, form=form)
+
+    results = dbl.get_books()
+    return render_template("home.html", results=results, form=form)
 
 
 @main.route("/add_author", methods=["GET", "POST"])
@@ -53,3 +60,15 @@ def add_book():
         flash(f"Book {response.title} added to the database")
         return redirect(url_for("main.index"))
     return render_template("add_book.html", form=form)
+
+
+@main.route("/search", methods=["GET", "POST"])
+def search():
+    form = SearchForm()
+    if form.validate_on_submit():
+        item = form.item.data
+        search_pattern = form.search.data
+        results = dbl.search_inventory(item, search_pattern)
+        return render_template("search.html", form=form, results=results)
+
+    return render_template("search.html", form=form)

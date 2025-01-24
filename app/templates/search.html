@@ -1,0 +1,46 @@
+ <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>Search</title>
+  </head>
+  <body>
+  {% include 'navbar.html' %}
+
+  <h1>Search Inventory</h1>
+
+  <form action="{{ url_for('main.search') }}" method="POST">
+  {{ form.hidden_tag() }}
+      <p>
+        {{ form.item.label }}<br>
+        {{ form.item() }}
+        {% for error in form.item.errors %}
+            <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+      </p>
+  <p>
+        {{ form.search.label }}<br>
+        {{ form.search() }}
+        {% for error in form.search.errors %}
+            <span style="color: red;">{{ error }}</span>
+        {% endfor %}
+      </p>
+
+  <p>
+        {{ form.submit() }}
+      </p>
+  </form>
+
+  <h1>Results</h1>
+    {% if results %}
+        {% include 'book_table.html' %}
+    {% else %}
+        <p>No results available.</p>
+    {% endif %}
+
+
+
+  </body>
+</html>
